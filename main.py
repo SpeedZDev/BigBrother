@@ -3,8 +3,10 @@ from langchain_openai import ChatOpenAI
 from langchain_tavily import TavilySearch
 from langchain.agents import create_agent
 from langchain_community.document_loaders import PyMuPDFLoader
-
+import streamlit as st
 load_dotenv()
+
+st.title("Big Brother")
 
 WebSearchTool = TavilySearch(max_result=5, topic="general")
 

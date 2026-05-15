@@ -4,3 +4,4 @@ python-dotenv
 langchain-tavily
 langchain-community
 pymupdf
+streamlit
