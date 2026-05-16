@@ -36,8 +36,9 @@ if UserQuery:
 
     with st.chat_message("assistant"):
         st.markdown(Response["messages"][-1].content)
+        st.write(st.session_state["messages"])
 
-st.write(st.session_state["messages"])
+
 
 
 
