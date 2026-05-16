@@ -6,15 +6,16 @@ from langchain_community.document_loaders import PyMuPDFLoader
 import streamlit as st
 load_dotenv()
 
+
+def SendPrompt():
+    print()
+
+
 st.title("Big Brother")
 
 WebSearchTool = TavilySearch(max_result=5, topic="general")
 
-#file_path = "./PDFData/PropInfo.pdf"
-#loader = PyMuPDFLoader(file_path)
-#docs = loader.load()
-#print(len(docs))
-
+UserInput = st.chat_input(placeholder="Enter Prompt Here Or Upload files", on_submit=SendPrompt)
 
 AgentModel = ChatOpenAI(model="gpt-5.4", max_completion_tokens=1000, temperature=0.1)
 Tools = [WebSearchTool]
