@@ -42,7 +42,7 @@ for message in st.session_state["ChatHistory"]:
     
 
 UserQuery = st.chat_input(placeholder="Enter Prompt Here Or Upload files")
-FileUploader = st.file_uploader(label="Upload Files Here")
+FileUploader = st.file_uploader(label="Upload Files Here", label_visibility="collapsed")
 if UserQuery != "quit" and UserQuery:
     with st.chat_message("user"):
         st.markdown(UserQuery)
