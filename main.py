@@ -17,6 +17,9 @@ Model = create_agent(AgentModel, tools=Tools, system_prompt=SystemPrompt)
 
 
 
+def ProcessChat(model, UserQuery):
+    Response = model.invoke({"messages": [{"role": "user", "content": UserQuery}]})
+    return Response
 
 st.title("Big Brother")
 
@@ -26,7 +29,10 @@ UserQuery = st.chat_input(placeholder="Enter Prompt Here Or Upload files")
 if UserQuery:
     with st.chat_message("user"):
         st.markdown(UserQuery)
-    response = Response = Model.invoke({"messages": [{"role": "user", "content": UserQuery}]})
+
+    Response = ProcessChat(Model, UserQuery)
+    
+
     with st.chat_message("assistant"):
         st.markdown(Response["messages"][-1].content)
 
