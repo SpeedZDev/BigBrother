@@ -8,7 +8,7 @@ load_dotenv()
 
 
 def SendPrompt():
-    print()
+    print("H")
 
 
 st.title("Big Brother")
