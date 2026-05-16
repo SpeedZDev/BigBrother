@@ -26,11 +26,11 @@ st.title("Big Brother")
 
 for message in st.session_state["ChatResponses"]:
     with st.chat_message(message["Role"]):
-        st.markdown[message["Content"]]
+        st.markdown(message["Content"])
     
 
 UserQuery = st.chat_input(placeholder="Enter Prompt Here Or Upload files")
-if UserQuery != "quit" and UserQuery != "":
+if UserQuery != "quit" and UserQuery:
     with st.chat_message("user"):
         st.markdown(UserQuery)
     
