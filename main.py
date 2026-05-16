@@ -7,8 +7,8 @@ import streamlit as st
 
 load_dotenv()
 
-if "messages" not in st.session_state:
-    st.session_state["messages"] = []
+if "ChatResponses" not in st.session_state:
+    st.session_state["ChatResponses"] = []
 
 AgentModel = ChatOpenAI(model="gpt-5.4", max_completion_tokens=2000, temperature=0.1)
 WebSearchTool = TavilySearch(max_result=5, topic="general")
@@ -20,7 +20,7 @@ Model = create_agent(AgentModel, tools=Tools, system_prompt=SystemPrompt)
 
 def ProcessChat(model, UserQuery):
     Response = model.invoke({"messages": [{"role": "user", "content": UserQuery}]})
-    st.session_state["messages"].append(Response)
+    st.session_state["ChatResponses"].append(Response["messages"][-1].content)
     return Response
 
 st.title("Big Brother")
