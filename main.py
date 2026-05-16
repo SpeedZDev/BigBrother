@@ -4,11 +4,14 @@ from langchain_tavily import TavilySearch
 from langchain.agents import create_agent
 from langchain_community.document_loaders import PyMuPDFLoader
 import streamlit as st
+from langchain_core.messages import HumanMessage, AIMessage
+
+
 
 load_dotenv()
 
-if "ChatResponses" not in st.session_state:
-    st.session_state["ChatResponses"] = []
+if "ChatHistory" not in st.session_state:
+    st.session_state["ChatHistory"] = []
 
 AgentModel = ChatOpenAI(model="gpt-5.4", max_completion_tokens=2000, temperature=0.1)
 WebSearchTool = TavilySearch(max_result=5, topic="general")
@@ -20,11 +23,12 @@ Model = create_agent(AgentModel, tools=Tools, system_prompt=SystemPrompt)
 
 def ProcessChat(model, UserQuery):
     Response = model.invoke({"messages": [{"role": "user", "content": UserQuery}]})
+    
     return Response
 
 st.title("Big Brother")
 
-for message in st.session_state["ChatResponses"]:
+for message in st.session_state["ChatHistory"]:
     with st.chat_message(message["Role"]):
         st.markdown(message["Content"])
     
@@ -34,15 +38,15 @@ if UserQuery != "quit" and UserQuery:
     with st.chat_message("user"):
         st.markdown(UserQuery)
     
-    st.session_state["ChatResponses"].append({"Role": "user", "Content": UserQuery})
+    st.session_state["ChatHistory"].append({"Role": "user", "Content": UserQuery})
     Response = ProcessChat(Model, UserQuery)
 
     with st.chat_message("assistant"):
         st.markdown(Response["messages"][-1].content)
        
         
-    st.session_state["ChatResponses"].append({"Role": "assistant","Content": Response["messages"][-1].content})
-    st.write(st.session_state["ChatResponses"])
+    st.session_state["ChatHistory"].append({"Role": "assistant","Content": Response["messages"][-1].content})
+    st.write(st.session_state["ChatHistory"])
 else:
     for key in st.session_state.keys():
         del st.session_state[key]
