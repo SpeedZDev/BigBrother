@@ -24,7 +24,6 @@ Model = create_agent(AgentModel, tools=Tools, system_prompt=SystemPrompt)
 def ProcessChat(model):
     messages = []
    
-    
     for message in st.session_state["ChatHistory"]:
         if message["Role"] == "user":
             messages.append(HumanMessage(content=message["Content"]))
@@ -43,6 +42,7 @@ for message in st.session_state["ChatHistory"]:
     
 
 UserQuery = st.chat_input(placeholder="Enter Prompt Here Or Upload files")
+FileUploader = st.file_uploader(label="Upload Files Here")
 if UserQuery != "quit" and UserQuery:
     with st.chat_message("user"):
         st.markdown(UserQuery)
