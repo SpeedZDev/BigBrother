@@ -21,9 +21,18 @@ Model = create_agent(AgentModel, tools=Tools, system_prompt=SystemPrompt)
 
 
 
-def ProcessChat(model, UserQuery):
-    Response = model.invoke({"messages": [{"role": "user", "content": UserQuery}]})
+def ProcessChat(model):
+    messages = []
+   
     
+    for message in st.session_state["ChatHistory"]:
+        if message["Role"] == "user":
+            messages.append(HumanMessage(content=message["Content"]))
+        
+        if message["Role"] == "assistant":
+            messages.append(AIMessage(content=message["Content"]))
+        
+    Response = model.invoke({"messages": messages})
     return Response
 
 st.title("Big Brother")
@@ -39,7 +48,7 @@ if UserQuery != "quit" and UserQuery:
         st.markdown(UserQuery)
     
     st.session_state["ChatHistory"].append({"Role": "user", "Content": UserQuery})
-    Response = ProcessChat(Model, UserQuery)
+    Response = ProcessChat(Model)
 
     with st.chat_message("assistant"):
         st.markdown(Response["messages"][-1].content)
