@@ -16,6 +16,8 @@ st.title("Big Brother")
 WebSearchTool = TavilySearch(max_result=5, topic="general")
 
 UserInput = st.chat_input(placeholder="Enter Prompt Here Or Upload files", on_submit=SendPrompt)
+if UserInput:
+    st.write("User Sent Prompt")
 
 AgentModel = ChatOpenAI(model="gpt-5.4", max_completion_tokens=1000, temperature=0.1)
 Tools = [WebSearchTool]
