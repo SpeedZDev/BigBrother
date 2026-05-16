@@ -20,7 +20,7 @@ Model = create_agent(AgentModel, tools=Tools, system_prompt=SystemPrompt)
 
 def ProcessChat(model, UserQuery):
     Response = model.invoke({"messages": [{"role": "user", "content": UserQuery}]})
-    st.session_state["messages"] += Response
+    st.session_state["messages"].append(Response)
     return Response
 
 st.title("Big Brother")
