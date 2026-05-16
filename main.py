@@ -7,15 +7,19 @@ import streamlit as st
 load_dotenv()
 
 
-def SendPrompt():
-    print("H")
 
 
 st.title("Big Brother")
 
 WebSearchTool = TavilySearch(max_result=5, topic="general")
 
-UserInput = st.chat_input(placeholder="Enter Prompt Here Or Upload files", on_submit=SendPrompt)
+UserInput = st.chat_input(placeholder="Enter Prompt Here Or Upload files")
+if UserInput:
+    response = f"{UserInput}"
+    with st.chat_message("assistant"):
+        st.markdown(response)
+
+
 if UserInput:
     st.write("User Sent Prompt")
 
