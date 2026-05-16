@@ -24,18 +24,17 @@ def ProcessChat(model, UserQuery):
 st.title("Big Brother")
 
 
-while True:
-    UserQuery = st.chat_input(placeholder="Enter Prompt Here Or Upload files")
-    if UserQuery is not "quit":
-        with st.chat_message("user"):
-            st.markdown(UserQuery)
 
-        Response = ProcessChat(Model, UserQuery)
+UserQuery = st.chat_input(placeholder="Enter Prompt Here Or Upload files")
+if UserQuery != "quit":
+    with st.chat_message("user"):
+        st.markdown(UserQuery)
 
-        with st.chat_message("assistant"):
-            st.markdown(Response["messages"][-1].content)
-    else:
-        break
+    Response = ProcessChat(Model, UserQuery)
+
+    with st.chat_message("assistant"):
+        st.markdown(Response["messages"][-1].content)
+
 
 
 
