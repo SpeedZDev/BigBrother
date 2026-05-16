@@ -20,24 +20,28 @@ Model = create_agent(AgentModel, tools=Tools, system_prompt=SystemPrompt)
 
 def ProcessChat(model, UserQuery):
     Response = model.invoke({"messages": [{"role": "user", "content": UserQuery}]})
-    st.session_state["ChatResponses"].append({"User Input": UserQuery})
-    st.session_state["ChatResponses"].append({"Chat Output": Response["messages"][-1].content})
     return Response
 
 st.title("Big Brother")
 
-
+for message in st.session_state["ChatResponses"]:
+    with st.chat_message(message["Role"]):
+        st.markdown[message["Content"]]
+    
 
 UserQuery = st.chat_input(placeholder="Enter Prompt Here Or Upload files")
-if UserQuery != "quit":
+if UserQuery != "quit" and UserQuery != "":
     with st.chat_message("user"):
         st.markdown(UserQuery)
-
+    
+    st.session_state["ChatResponses"].append({"Role": "user", "Content": UserQuery})
     Response = ProcessChat(Model, UserQuery)
 
     with st.chat_message("assistant"):
         st.markdown(Response["messages"][-1].content)
         st.write(st.session_state["ChatResponses"])
+        
+    st.session_state["ChatResponses"].append({"Role": "assistant","Content": Response["messages"][-1].content})
 else:
     for key in st.session_state.keys():
         del st.session_state[key]
