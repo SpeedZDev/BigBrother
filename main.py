@@ -24,6 +24,8 @@ st.title("Big Brother")
 
 UserQuery = st.chat_input(placeholder="Enter Prompt Here Or Upload files")
 if UserQuery:
+    with st.chat_message("user"):
+        st.markdown(UserQuery)
     response = Response = Model.invoke({"messages": [{"role": "user", "content": UserQuery}]})
     with st.chat_message("assistant"):
         st.markdown(Response["messages"][-1].content)
