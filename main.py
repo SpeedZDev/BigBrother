@@ -8,34 +8,27 @@ load_dotenv()
 
 
 
-
-st.title("Big Brother")
-
-WebSearchTool = TavilySearch(max_result=5, topic="general")
-
-UserInput = st.chat_input(placeholder="Enter Prompt Here Or Upload files")
-if UserInput:
-    response = f"{UserInput}"
-    with st.chat_message("assistant"):
-        st.markdown(response)
-
-
-if UserInput:
-    st.write("User Sent Prompt")
-
 AgentModel = ChatOpenAI(model="gpt-5.4", max_completion_tokens=1000, temperature=0.1)
+WebSearchTool = TavilySearch(max_result=5, topic="general")
 Tools = [WebSearchTool]
 SystemPrompt = "You are a General AI Information Assistant that Answers Questions and helps Users On general Everday Actives. When Questions are asks you find the *MOST UP TO DATE* sources from the current date regargding the subject and put these sources that use in a neatly fromatted list! When User Uploads documents Scan these doucments and do as the user asks with these documents"
 Model = create_agent(AgentModel, tools=Tools, system_prompt=SystemPrompt)
 
 
-while True:
-    UserQuery = input("Enter A Prompt/Question: ")
-    if UserQuery == "q" or UserQuery == "quit":
-        break
-        
-    #Response = Model.invoke({"messages": [{"role": "user", "content": f"find Names in {docs}"}]})
-    Response = Model.invoke({"messages": [{"role": "user", "content": UserQuery}]})
-    print(Response["messages"][-1].content)
+
+
+st.title("Big Brother")
+
+
+
+UserQuery = st.chat_input(placeholder="Enter Prompt Here Or Upload files")
+if UserQuery:
+    response = Response = Model.invoke({"messages": [{"role": "user", "content": UserQuery}]})
+    with st.chat_message("assistant"):
+        st.markdown(Response["messages"][-1].content)
+
+
+
+
     
 
