@@ -40,8 +40,8 @@ if UserQuery != "quit" and UserQuery:
     with st.chat_message("assistant"):
         st.markdown(Response["messages"][-1].content)
         st.write(st.session_state["ChatResponses"])
-        
-    st.session_state["ChatResponses"].append({"Role": "assistant","Content": Response["messages"][-1].content})
+        st.session_state["ChatResponses"].append({"Role": "assistant","Content": Response["messages"][-1].content})
+    
 else:
     for key in st.session_state.keys():
         del st.session_state[key]
